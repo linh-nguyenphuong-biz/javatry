@@ -22,7 +22,7 @@ import org.docksidestage.unit.PlainTestCase;
  * Operate exercise as javadoc. If it's question style, write your answer before test execution. <br>
  * (javadocの通りにエクササイズを実施。質問形式の場合はテストを実行する前に考えて答えを書いてみましょう)
  * @author jflute
- * @author your_name_here
+ * @author nguyen_phuong_linh
  */
 public class Step04MethodTest extends PlainTestCase {
 
@@ -35,7 +35,7 @@ public class Step04MethodTest extends PlainTestCase {
      */
     public void test_method_call_basic() {
         String sea = supplySomething();
-        log(sea); // your answer? =>
+        log(sea); // your answer? => over
     }
 
     /** Same as the previous method question. (前のメソッドの質問と同じ) */
@@ -43,7 +43,7 @@ public class Step04MethodTest extends PlainTestCase {
         String sea = functionSomething("mystic");
         consumeSomething(supplySomething());
         runnableSomething();
-        log(sea); // your answer? => 
+        log(sea); // your answer? => mysmys
     }
 
     private String functionSomething(String name) {
@@ -76,7 +76,7 @@ public class Step04MethodTest extends PlainTestCase {
         if (!land) {
             sea = sea + mutable.getStageName().length();
         }
-        log(sea); // your answer? => 
+        log(sea); // your answer? => 910
     }
 
     private int helloMutable(int sea, Boolean land, St4MutableStage piari) {
@@ -115,7 +115,7 @@ public class Step04MethodTest extends PlainTestCase {
         }
         ++sea;
         sea = inParkCount;
-        log(sea); // your answer? => 
+        log(sea); // your answer? => 100
     }
 
     private void offAnnualPassport(boolean hasAnnualPassport) {
@@ -137,7 +137,7 @@ public class Step04MethodTest extends PlainTestCase {
      * <pre>
      * o replaceAtoB(): has one argument as String, returns argument replaced "A" with "B" as String 
      * o replaceCtoB(): has one argument as String, returns argument replaced "C" with "B" as String 
-     * o addPrefix(): has two arguments as String, returns combined first argument with ":" with second argument 
+     * o addPrefix(): has two arguments as String, returns combined first argument with ":" with second argument
      * o isAvailableLogging(): no argument, returns private instance variable "availableLogging" initialized as true (also make it)  
      * o showSea(): has one argument as String argument, no return, show argument by log()
      * </pre>
@@ -152,12 +152,32 @@ public class Step04MethodTest extends PlainTestCase {
      */
     public void test_method_making() {
         // comment out after making these methods
-        //String replaced = replaceCtoB(replaceAtoB("ABC"));
-        //String sea = addPrefix("broadway", replaced);
-        //if (isAvailableLogging()) {
-        //    showSea(sea);
-        //}
+        String replaced = replaceCtoB(replaceAtoB("ABC"));
+        String sea = addPrefix("broadway", replaced);
+        if (isAvailableLogging()) {
+            showSea(sea);
+        }
     }
 
     // write methods here
+    private boolean availableLogging = true;
+    private String replaceAtoB(String a){
+        return a.replace("A", "B");
+    }
+
+    private String replaceCtoB(String c){
+        return c.replace("C", "B");
+    }
+
+    private String addPrefix(String s1, String s2){
+        return s1+":"+s2;
+    }
+
+    private boolean isAvailableLogging(){
+        return availableLogging;
+    }
+
+    private void showSea(String sea){
+        log(sea);
+    }
 }
