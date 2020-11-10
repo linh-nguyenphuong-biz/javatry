@@ -24,12 +24,16 @@ public class TicketBooth {
     //                                                                          Definition
     //                                                                          ==========
     private static final int MAX_QUANTITY = 10;
-    private static final int ONE_DAY_PRICE = 7400; // when 2019/06/15
+    public static final int ONE_DAY_PRICE = 7400; // when 2019/06/15
+    public static final int TWO_DAY_PRICE = 13200;
+    public static final int FOUR_DAY_PRICE = 22400;
 
     // ===================================================================================
     //                                                                           Attribute
     //                                                                           =========
-    private int quantity = MAX_QUANTITY;
+    private int oneDayQuantity = MAX_QUANTITY;
+    private int twoDayQuantity = MAX_QUANTITY;
+    private int fourDayQuantity = MAX_QUANTITY;
     private Integer salesProceeds;
 
     // ===================================================================================
@@ -41,21 +45,44 @@ public class TicketBooth {
     // ===================================================================================
     //                                                                          Buy Ticket
     //                                                                          ==========
-    public void buyOneDayPassport(int handedMoney) {
+    public TicketOneDay buyOneDayPassport(int handedMoney) {
+        this.oneDayQuantity = buyPassport(handedMoney, 1, this.oneDayQuantity);
+        return new TicketOneDay(ONE_DAY_PRICE);
+    }
+
+    public TicketBuyResult buyTwoDayPassport(int handedMoney){
+        this.twoDayQuantity = buyPassport(handedMoney, 2, this.twoDayQuantity);
+        return new TicketBuyResult(new TicketPluralDays(TWO_DAY_PRICE, 2), handedMoney - TWO_DAY_PRICE);
+    }
+
+    public TicketBuyResult buy4DaysPassport(int handedMoney){
+        this.fourDayQuantity = buyPassport(handedMoney, 4, this.fourDayQuantity);
+        return new TicketBuyResult(new TicketPluralDays(FOUR_DAY_PRICE, 4), handedMoney - FOUR_DAY_PRICE);
+    }
+
+    private int buyPassport(int handedMoney, int type, int quantity){
+        int price = type == 1? ONE_DAY_PRICE : type == 2? TWO_DAY_PRICE : FOUR_DAY_PRICE;
         if (quantity <= 0) {
             throw new TicketSoldOutException("Sold out");
         }
-        --quantity;
-        if (handedMoney < ONE_DAY_PRICE) {
+        if (handedMoney < price) {
             throw new TicketShortMoneyException("Short money: " + handedMoney);
         }
+        --quantity;
         if (salesProceeds != null) {
-            salesProceeds = salesProceeds + handedMoney;
+            salesProceeds = salesProceeds + price;
         } else {
-            salesProceeds = handedMoney;
+            salesProceeds = price;
         }
+        return quantity;
     }
 
+    public int getTwoDayQuantity() {
+        return twoDayQuantity;
+    }
+    public void setTwoDayQuantity(int twoDayQuantity) {
+        this.twoDayQuantity = twoDayQuantity;
+    }
     public static class TicketSoldOutException extends RuntimeException {
 
         private static final long serialVersionUID = 1L;
@@ -77,11 +104,15 @@ public class TicketBooth {
     // ===================================================================================
     //                                                                            Accessor
     //                                                                            ========
-    public int getQuantity() {
-        return quantity;
+    public int getOneDayQuantity() {
+        return oneDayQuantity;
     }
 
     public Integer getSalesProceeds() {
         return salesProceeds;
+    }
+
+    public int getFourDayQuantity() {
+        return fourDayQuantity;
     }
 }
