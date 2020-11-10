@@ -25,7 +25,7 @@ import org.docksidestage.unit.PlainTestCase;
  * Operate exercise as javadoc. If it's question style, write your answer before test execution. <br>
  * (javadocの通りにエクササイズを実施。質問形式の場合はテストを実行する前に考えて答えを書いてみましょう)
  * @author jflute
- * @author your_name_here
+ * @author nguyen_phuong_linh
  */
 public class Step02IfForTest extends PlainTestCase {
 
@@ -52,7 +52,7 @@ public class Step02IfForTest extends PlainTestCase {
         } else {
             sea = 7;
         }
-        log(sea); // your answer? => 
+        log(sea); // your answer? => 7
     }
 
     /** Same as the previous method question. (前のメソッドの質問と同じ) */
@@ -67,7 +67,7 @@ public class Step02IfForTest extends PlainTestCase {
         } else {
             sea = 9;
         }
-        log(sea); // your answer? => 
+        log(sea); // your answer? => 7
     }
 
     /** Same as the previous method question. (前のメソッドの質問と同じ) */
@@ -91,7 +91,7 @@ public class Step02IfForTest extends PlainTestCase {
         if (land) {
             sea = 10;
         }
-        log(sea); // your answer? => 
+        log(sea); // your answer? => 10
     }
 
     // ===================================================================================
@@ -107,7 +107,7 @@ public class Step02IfForTest extends PlainTestCase {
                 sea = stage;
             }
         }
-        log(sea); // your answer? => 
+        log(sea); // your answer? => dockside
     }
 
     /** Same as the previous method question. (前のメソッドの質問と同じ) */
@@ -117,12 +117,15 @@ public class Step02IfForTest extends PlainTestCase {
         for (String stage : stageList) {
             sea = stage;
         }
-        log(sea); // your answer? => 
+        log(sea); // your answer? => magiclamp
     }
 
     /** Same as the previous method question. (前のメソッドの質問と同じ) */
     public void test_for_foreach_continueBreak() {
         List<String> stageList = prepareStageList();
+        /*
+        stageList = ["broadway","dockside","hangar","magiclamp"]
+         */
         String sea = null;
         for (String stage : stageList) {
             if (stage.startsWith("br")) {
@@ -133,12 +136,15 @@ public class Step02IfForTest extends PlainTestCase {
                 break;
             }
         }
-        log(sea); // your answer? => 
+        log(sea); // your answer? => hangar
     }
 
     /** Same as the previous method question. (前のメソッドの質問と同じ) */
     public void test_for_listforeach_basic() {
         List<String> stageList = prepareStageList();
+        /*
+        stageList = ["broadway","dockside","hangar","magiclamp"]
+         */
         StringBuilder sb = new StringBuilder();
         stageList.forEach(stage -> {
             if (sb.length() > 0) {
@@ -149,7 +155,7 @@ public class Step02IfForTest extends PlainTestCase {
             }
         });
         String sea = sb.toString();
-        log(sea); // your answer? => 
+        log(sea); // your answer? => dockside
     }
 
     // ===================================================================================
@@ -161,6 +167,19 @@ public class Step02IfForTest extends PlainTestCase {
      */
     public void test_iffor_making() {
         // write if-for here
+        List<String> stageList = prepareStageList();
+        /*
+        stageList = ["broadway","dockside","hangar","magiclamp"]
+         */
+        List<String> aString = new ArrayList<>();
+        stageList.forEach(stage -> {
+            if (stage.contains("a")){
+                aString.add(stage);
+            }
+        });
+        aString.forEach(s -> {
+            log(s);
+        });
     }
 
     // ===================================================================================
@@ -172,17 +191,26 @@ public class Step02IfForTest extends PlainTestCase {
      */
     public void test_iffor_refactor_foreach_to_forEach() {
         List<String> stageList = prepareStageList();
-        String sea = null;
-        for (String stage : stageList) {
-            if (stage.startsWith("br")) {
-                continue;
+        /*
+        stageList = ["broadway","dockside","hangar","magiclamp"]
+         */
+        final String[] sea = { null };
+        final boolean[] flag = {true};
+        stageList.forEach(stage -> {
+            if (!stage.startsWith("br") && flag[0]) {
+                sea[0] = stage;
+                if (stage.contains("ga")) {
+                    flag[0] = false;
+                }
             }
-            sea = stage;
-            if (stage.contains("ga")) {
-                break;
-            }
-        }
-        log(sea); // should be same as before-fix
+        });
+        log(sea[0]); // should be same as before-fix
+
+        /* LEARNED:
+        - variables used in forEach() must be final
+        - CAN NOT use continue and break in forEach()
+        - return in forEach() is equivalent to continue, NOT break
+         */
     }
 
     /**
@@ -191,12 +219,25 @@ public class Step02IfForTest extends PlainTestCase {
      * <pre>
      * _/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
      * your question here (ここにあなたの質問を):
-     * 
+     * What string is sb variable at the method end?
      * _/_/_/_/_/_/_/_/_/_/
      * </pre>
      */
     public void test_iffor_yourExercise() {
         // write your code here
+        List<String> stageList = prepareStageList();
+        /*
+        stageList = ["broadway","dockside","hangar","magiclamp"]
+         */
+        StringBuilder sb = new StringBuilder();
+        stageList.forEach(stage -> {
+            myHelper(sb, stage);
+        });
+        log(sb); // your answer: broadway,dockside,hangar,magiclamp,
+    }
+
+    private void myHelper(StringBuilder sb, String s){
+        sb.append(s + ",");
     }
 
     // ===================================================================================
