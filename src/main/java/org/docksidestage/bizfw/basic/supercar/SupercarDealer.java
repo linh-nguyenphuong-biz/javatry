@@ -23,7 +23,7 @@ import org.docksidestage.bizfw.basic.supercar.SupercarManufacturer.Supercar;
  */
 public class SupercarDealer {
 
-    public Supercar orderSupercar(String clientRequirement) {
+    public Supercar orderSupercar(String clientRequirement) throws RuntimeException {
         SupercarManufacturer manufacturer = createSupercarManufacturer();
         if (clientRequirement.contains("steering wheel is like sea")) {
             return manufacturer.makeSupercar("piari");
