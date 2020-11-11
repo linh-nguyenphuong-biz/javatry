@@ -33,57 +33,27 @@ public abstract class Animal implements Loudable {
     // ===================================================================================
     //                                                                           Attribute
     //                                                                           =========
-    protected int hitPoint;
+    protected final BarkProcess barkProcess;
 
     // ===================================================================================
     //                                                                         Constructor
     //                                                                         ===========
     public Animal() {
-        hitPoint = getInitialHitPoint();
-    }
-
-    protected int getInitialHitPoint() {
-        return 10; // as default
+        barkProcess = new BarkProcess(getBarkWord());
     }
 
     // ===================================================================================
     //                                                                               Bark
     //                                                                              ======
     public BarkedSound bark() {
-        breatheIn();
-        prepareAbdominalMuscle();
-        String barkWord = getBarkWord();
-        BarkedSound barkedSound = doBark(barkWord);
-        return barkedSound;
-    }
-
-    protected void prepareAbdominalMuscle() {
-        logger.debug("...Using my abdominal muscle"); // dummy implementation
-        downHitPoint();
-    }
-
-    protected void breatheIn() {
-        logger.debug("...Breathing in"); // dummy implementation
-        downHitPoint();
+        return barkProcess.bark();
     }
 
     protected abstract String getBarkWord();
 
-    protected BarkedSound doBark(String barkWord) {
-        downHitPoint();
-        return new BarkedSound(barkWord);
-    }
-
     // ===================================================================================
     //                                                                           Hit Point
     //                                                                           =========
-    protected void downHitPoint() {
-        --hitPoint;
-        if (hitPoint == 0) {
-            throw new IllegalStateException("I'm very tired, so I want to sleep" + getBarkWord());
-        }
-    }
-
     // ===================================================================================
     //                                                                               Loud
     //                                                                              ======
@@ -96,6 +66,6 @@ public abstract class Animal implements Loudable {
     //                                                                            Accessor
     //                                                                            ========
     public int getHitPoint() {
-        return hitPoint;
+        return barkProcess.getHitPoint();
     }
 }

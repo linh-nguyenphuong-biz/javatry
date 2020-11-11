@@ -23,9 +23,9 @@ public class St6OperationSystem {
     // ===================================================================================
     //                                                                          Definition
     //                                                                          ==========
-    private static final String OS_TYPE_MAC = "Mac";
-    private static final String OS_TYPE_WINDOWS = "Windows";
-    private static final String OS_TYPE_OLD_WINDOWS = "OldWindows";
+    public static final String OS_TYPE_MAC = "Mac";
+    public static final String OS_TYPE_WINDOWS = "Windows";
+    public static final String OS_TYPE_OLD_WINDOWS = "OldWindows";
 
     // ===================================================================================
     //                                                                           Attribute
@@ -52,26 +52,14 @@ public class St6OperationSystem {
     }
 
     protected String getFileSeparator() {
-        if (OS_TYPE_MAC.equalsIgnoreCase(osType)) {
-            return "/";
-        } else if (OS_TYPE_WINDOWS.equalsIgnoreCase(osType)) {
-            return "\\";
-        } else if (OS_TYPE_OLD_WINDOWS.equalsIgnoreCase(osType)) {
-            return "\\";
-        } else {
-            throw new IllegalStateException("Unknown osType: " + osType);
-        }
+        throw new IllegalStateException("Unknown osType: " + osType);
     }
 
     protected String getUserDirectory() {
-        if (OS_TYPE_MAC.equalsIgnoreCase(osType)) {
-            return "/Users/" + loginId;
-        } else if (OS_TYPE_WINDOWS.equalsIgnoreCase(osType)) {
-            return "/Users/" + loginId;
-        } else if (OS_TYPE_OLD_WINDOWS.equalsIgnoreCase(osType)) {
-            return "/Documents and Settigs/" + loginId;
-        } else {
-            throw new IllegalStateException("Unknown osType: " + osType);
-        }
+        throw new IllegalStateException("Unknown osType: " + osType);
+    }
+
+    public String getLoginId() {
+        return loginId;
     }
 }
