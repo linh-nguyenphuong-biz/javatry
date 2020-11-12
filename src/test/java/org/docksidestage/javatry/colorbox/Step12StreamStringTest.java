@@ -30,7 +30,7 @@ import org.docksidestage.unit.PlainTestCase;
  * o don't fix the YourPrivateRoom class and color-box classes
  * </pre>
  * @author jflute
- * @author your_name_here
+ * @author nguyen_phuong_linh
  */
 public class Step12StreamStringTest extends PlainTestCase {
 
@@ -48,7 +48,7 @@ public class Step12StreamStringTest extends PlainTestCase {
                 .map(colorBox -> colorBox.getColor().getColorName())
                 .map(colorName -> colorName.length() + " (" + colorName + ")")
                 .orElse("*not found");
-        log(answer);
+        log(answer); // color name's length: 5
     }
 
     /**
