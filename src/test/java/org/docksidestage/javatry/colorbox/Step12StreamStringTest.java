@@ -341,8 +341,8 @@ public class Step12StreamStringTest extends PlainTestCase {
                 .filter(cnt -> cnt instanceof Map)
                 .map(cnt -> {
                     String s = "map:{ ";
-                    Map<?,?> map = (Map<?,?>) cnt;
-                    for (Object key : map.keySet()){
+                    Map<?, ?> map = (Map<?, ?>) cnt;
+                    for (Object key : map.keySet()) {
                         s += key.toString() + " = " + map.get(key) + " ; ";
                     }
                     s = s.replaceAll("; $", "}");
@@ -358,6 +358,32 @@ public class Step12StreamStringTest extends PlainTestCase {
      * (カラーボックスの中に入っている java.util.Map を "map:{ key = value ; key = map:{ key = value ; ... } ; ... }" という形式で表示すると？)
      */
     public void test_showMap_nested() {
+        List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+        List<String> ans = colorBoxList.stream()
+                .flatMap(box -> box.getSpaceList().stream())
+                .map(space -> space.getContent())
+                .filter(cnt -> cnt instanceof Map)
+                .map(cnt -> {
+                    String s = "map:{ ";
+                    Map<?, ?> map = (Map<?, ?>) cnt;
+                    for (Object key : map.keySet()) {
+                        Object val = map.get(key);
+                        if (val instanceof Map) {
+                            String v = "map:{ ";
+                            Map<?, ?> valMap = (Map<?, ?>) val;
+                            for (Object k : valMap.keySet()) {
+                                v += key.toString() + " = " + valMap.get(k) + " ; ";
+                            }
+                            val = v;
+                        }
+                        s += key.toString() + " = " + val + " ; ";
+                    }
+                    s = s.replaceAll("; $", "}");
+                    return s;
+                })
+                .collect(Collectors.toList());
+        log(ans);
+        // [map:{ 1-Day Passport = 7400 ; Starlight Passport = 5400 ; After 6 Passport = 4200 ; 2-Day Passport = 13200 ; 3-Day Magic Passport = 17800 ; 4-Day Magic Passport = 22400 ; Land Annual Passport = 61000 ; Sea Annual Passport = 61000 ; Group Passport = 6700 }, map:{ sea = map:{ sea = [over, table, hello] ; sea = [mystic, shadow, mirage] ; sea = {spring=fashion, summer=pirates, autumn=vi, winter=jazz} ;  ; land = map:{ land = [oh, party] ; land = [oneman] ;  }, map:{ Small Coin Locker = 300 ; Resort Line = 250 ; Cinema Piari = 1800 ; Middle Coin Locker = 4O0 }]
     }
 
     // ===================================================================================
