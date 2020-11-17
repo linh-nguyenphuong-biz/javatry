@@ -98,7 +98,6 @@ public class WordPool {
     }
 
     private Language getJapanese(LanguagePool languagePool) {
-        wordMap.put(5L, new Word(languagePool.getLanguage("Japanese"), "君"));
         return languagePool.getLanguage("Japanese");
     }
 
