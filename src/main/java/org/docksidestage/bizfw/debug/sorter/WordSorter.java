@@ -27,7 +27,8 @@ public class WordSorter implements Sorter<Word> {
     @Override
     public List<Word> sort(List<Word> list) {
         List<Sorter<Word>> sorters = Arrays.asList(new BubbleSorter(), new SelectionSorter(), new QuickSorter());
-        int i = new Random().nextInt(sorters.size());
-        return sorters.get(i).sort(words);
+//        int i = new Random().nextInt(sorters.size());
+        int i = 2;
+        return sorters.get(i).sort(list);
     }
 }
